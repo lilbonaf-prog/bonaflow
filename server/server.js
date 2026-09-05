@@ -10,6 +10,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+const customerRoutes = require('./routes/customerRoutes')
+app.use('/api/customers', customerRoutes)
+
 const productRoutes = require('./routes/productRoutes')
 app.use('/api/products', productRoutes)
 
