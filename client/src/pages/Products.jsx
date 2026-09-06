@@ -27,9 +27,10 @@ function Products() {
     }
   }
 
-  useEffect(() => {
-    fetchProducts()
-  }, [])
+useEffect(() => {
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- standard fetch-on-mount pattern; setState only runs after the async request resolves, not synchronously
+  fetchProducts()
+}, [])
 
   const handleProductAdded = (newProduct) => {
     setProducts([newProduct, ...products])
