@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Sales from "./pages/Sales";
 import Expenses from "./pages/Expenses";
 import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -22,6 +23,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
             </ProtectedRoute>
           }
         />

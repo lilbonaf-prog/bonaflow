@@ -1,0 +1,70 @@
+.settings-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: var(--space-lg);
+  max-width: 480px;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-form label {
+  font-size: 0.85rem;
+  color: var(--color-text);
+  margin-bottom: 6px;
+  margin-top: var(--space-md);
+}
+
+.settings-form label:first-of-type {
+  margin-top: 0;
+}
+
+.settings-form input,
+.settings-form select {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+}
+
+.settings-form input:focus,
+.settings-form select:focus {
+  outline: 2px solid var(--color-emerald);
+  outline-offset: 1px;
+  border-color: var(--color-emerald);
+}
+
+.settings-form button {
+  background-color: var(--color-emerald);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: var(--space-lg);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.settings-form button:hover:not(:disabled) {
+  background-color: var(--color-emerald-dark);
+}
+
+.settings-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.form-success {
+  background-color: #E5F6ED;
+  color: var(--color-emerald-dark);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: var(--space-md);
+}

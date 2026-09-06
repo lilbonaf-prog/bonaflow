@@ -17,6 +17,20 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  phone: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  address: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  logoUrl: {
+    type: String,
+    default: ''
+  },
   currency: {
     type: String,
     default: 'GHS'

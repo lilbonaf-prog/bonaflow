@@ -10,6 +10,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+const userRoutes = require('./routes/userRoutes')
+app.use('/api/users', userRoutes)
+
 const reportRoutes = require('./routes/reportRoutes')
 app.use('/api/reports', reportRoutes)
 
