@@ -7,6 +7,7 @@ import Products from './pages/Products'
 import Customers from './pages/Customers'
 import ProtectedRoute from './components/ProtectedRoute'
 import Sales from './pages/Sales'
+import Expenses from './pages/Expenses'
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/expenses"
+  element={
+    <ProtectedRoute>
+      <Expenses />
+    </ProtectedRoute>
+  }
+/>
         <Route
           path="/products"
           element={

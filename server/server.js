@@ -10,6 +10,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+const expenseRoutes = require('./routes/expenseRoutes')
+app.use('/api/expenses', expenseRoutes)
+
 const saleRoutes = require('./routes/saleRoutes')
 app.use('/api/sales', saleRoutes)
 
