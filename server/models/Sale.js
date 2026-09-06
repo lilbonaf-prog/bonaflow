@@ -32,6 +32,10 @@ const saleSchema = new mongoose.Schema({
     ref: 'Customer',
     default: null
   },
+  receiptNumber: {
+    type: String,
+    required: true
+  },
   items: {
     type: [saleItemSchema],
     required: true,

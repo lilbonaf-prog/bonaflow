@@ -18,6 +18,7 @@ const createSale = async (req, res) => {
 
     let total = 0
     const saleItems = []
+    let createdSale
 
     await session.withTransaction(async () => {
       for (const item of items) {
@@ -44,17 +45,25 @@ const createSale = async (req, res) => {
         await product.save({ session })
       }
 
-      await Sale.create([{
+      const salesCount = await Sale.countDocuments({ user: req.userId }).session(session)
+      const receiptNumber = `BF-${String(salesCount + 1).padStart(5, '0')}`
+
+      const result = await Sale.create([{
         user: req.userId,
         customer: customer || null,
+        receiptNumber,
         items: saleItems,
         total,
         paymentMethod,
         notes
       }], { session })
+
+      createdSale = result[0]
     })
 
-    res.status(201).json({ message: 'Sale recorded successfully' })
+    const populatedSale = await Sale.findById(createdSale._id).populate('customer', 'fullName')
+
+    res.status(201).json(populatedSale)
   } catch (error) {
     console.error(error)
     res.status(400).json({ message: error.message || 'Unable to record the sale. Please try again.' })

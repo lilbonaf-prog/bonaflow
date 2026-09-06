@@ -22,6 +22,7 @@ function AddSaleForm({ onSuccess, onClose }) {
       setProducts(productsRes.data)
       setCustomers(customersRes.data)
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- standard fetch-on-mount pattern; setState only runs after the async request resolves, not synchronously
     loadData()
   }, [])
 
@@ -58,7 +59,7 @@ function AddSaleForm({ onSuccess, onClose }) {
 
     setLoading(true)
     try {
-      await api.post('/sales', {
+      const response = await api.post('/sales', {
         customer: customerId || null,
         items: validItems.map((item) => ({
           productId: item.productId,
@@ -67,7 +68,7 @@ function AddSaleForm({ onSuccess, onClose }) {
         paymentMethod,
         notes
       })
-      onSuccess()
+      onSuccess(response.data)
       onClose()
     } catch (err) {
       setError(err.response?.data?.message || 'Unable to record the sale. Please try again.')
