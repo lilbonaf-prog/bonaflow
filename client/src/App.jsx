@@ -1,13 +1,14 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Landing from './pages/Landing'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import Products from './pages/Products'
-import Customers from './pages/Customers'
-import ProtectedRoute from './components/ProtectedRoute'
-import Sales from './pages/Sales'
-import Expenses from './pages/Expenses'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from "./pages/Landing";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Products from "./pages/Products";
+import Customers from "./pages/Customers";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Sales from "./pages/Sales";
+import Expenses from "./pages/Expenses";
+import Reports from "./pages/Reports";
 
 function App() {
   return (
@@ -25,13 +26,21 @@ function App() {
           }
         />
         <Route
-  path="/expenses"
-  element={
-    <ProtectedRoute>
-      <Expenses />
-    </ProtectedRoute>
-  }
-/>
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/expenses"
+          element={
+            <ProtectedRoute>
+              <Expenses />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/products"
           element={
@@ -58,7 +67,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
