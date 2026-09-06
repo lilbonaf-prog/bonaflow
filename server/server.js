@@ -10,6 +10,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+const dashboardRoutes = require('./routes/dashboardRoutes')
+app.use('/api/dashboard', dashboardRoutes)
+
 const expenseRoutes = require('./routes/expenseRoutes')
 app.use('/api/expenses', expenseRoutes)
 
