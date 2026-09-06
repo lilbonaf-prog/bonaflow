@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FiPlus, FiAlertTriangle, FiEdit2, FiTrash2 } from 'react-icons/fi'
+import { FiPlus, FiAlertTriangle, FiEdit2, FiTrash2, FiSearch } from 'react-icons/fi'
 import DashboardLayout from '../components/DashboardLayout'
 import Modal from '../components/Modal'
 import AddProductForm from '../components/AddProductForm'
@@ -15,6 +15,7 @@ function Products() {
   const [editingProduct, setEditingProduct] = useState(null)
   const [deletingProduct, setDeletingProduct] = useState(null)
   const [deleteLoading, setDeleteLoading] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
 
   const fetchProducts = async () => {
     try {
@@ -27,10 +28,10 @@ function Products() {
     }
   }
 
-useEffect(() => {
-  // eslint-disable-next-line react-hooks/set-state-in-effect -- standard fetch-on-mount pattern; setState only runs after the async request resolves, not synchronously
-  fetchProducts()
-}, [])
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- standard fetch-on-mount pattern; setState only runs after the async request resolves, not synchronously
+    fetchProducts()
+  }, [])
 
   const handleProductAdded = (newProduct) => {
     setProducts([newProduct, ...products])
@@ -53,6 +54,10 @@ useEffect(() => {
     }
   }
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <DashboardLayout>
       <div className="page-header">
@@ -62,6 +67,18 @@ useEffect(() => {
           <span>Add Product</span>
         </button>
       </div>
+
+      {!loading && !error && products.length > 0 && (
+        <div className="search-bar">
+          <FiSearch size={16} />
+          <input
+            type="text"
+            placeholder="Search products by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      )}
 
       {loading && <p className="state-message">Loading products...</p>}
       {error && <p className="state-message state-error">{error}</p>}
@@ -73,7 +90,13 @@ useEffect(() => {
         </div>
       )}
 
-      {!loading && products.length > 0 && (
+      {!loading && products.length > 0 && filteredProducts.length === 0 && (
+        <div className="empty-state">
+          <p>No products match "{searchTerm}"</p>
+        </div>
+      )}
+
+      {!loading && filteredProducts.length > 0 && (
         <div className="table-wrapper">
           <table className="data-table">
             <thead>
@@ -87,7 +110,7 @@ useEffect(() => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {filteredProducts.map((product) => (
                 <tr key={product._id}>
                   <td>{product.name}</td>
                   <td>GH₵ {product.costPrice.toFixed(2)}</td>
