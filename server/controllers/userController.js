@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const cloudinary = require('../config/cloudinary')
 
 const getMe = async (req, res) => {
   try {
@@ -40,4 +41,29 @@ const updateMe = async (req, res) => {
   }
 }
 
-module.exports = { getMe, updateMe }
+const uploadLogo = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'Please select an image to upload' })
+    }
+
+    const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
+
+    const result = await cloudinary.uploader.upload(base64Image, {
+      folder: 'bonaflow-logos',
+      transformation: [{ width: 400, height: 400, crop: 'limit' }]
+    })
+
+    const user = await User.findById(req.userId)
+    user.logoUrl = result.secure_url
+    await user.save()
+
+    const updatedUser = await User.findById(user._id).select('-password')
+    res.json(updatedUser)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Unable to upload the logo. Please try again.' })
+  }
+}
+
+module.exports = { getMe, updateMe, uploadLogo }
