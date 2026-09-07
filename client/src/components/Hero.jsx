@@ -14,7 +14,7 @@ function Hero() {
           </p>
           <div className="hero-actions">
             <Link to="/register" className="hero-cta-primary">Start Managing Your Business</Link>
-            <Link to="/demo" className="hero-cta-secondary">View Demo</Link>
+            <Link to="/login?demo=true" className="hero-cta-secondary">View Demo</Link>
           </div>
         </div>
 

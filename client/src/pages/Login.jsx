@@ -1,14 +1,17 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import api from '../api/axios'
 import './Auth.css'
 
 function Login() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const isDemo = searchParams.get('demo') === 'true'
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: isDemo ? 'demo@richmondelectronics.com' : '',
+    password: isDemo ? 'Demo@12345' : ''
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -35,11 +38,21 @@ function Login() {
     }
   }
 
+  useEffect(() => {
+    if (isDemo) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time auto-submit for the demo link, not a synchronous render-time state update
+      handleSubmit({ preventDefault: () => {} })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div className="auth-page">
       <div className="auth-card">
         <h1>Welcome back</h1>
-        <p className="auth-subtitle">Log in to your BonaFlow dashboard.</p>
+        <p className="auth-subtitle">
+          {isDemo ? 'Signing you into the BonaFlow demo...' : 'Log in to your BonaFlow dashboard.'}
+        </p>
 
         {error && <div className="auth-error">{error}</div>}
 
